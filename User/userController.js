@@ -15,7 +15,7 @@ const createUser = async function (req, res) {
 
 const fetchUsers = async function (req, res) {
   try {
-    const users = await User.find({});
+    const users = await User.find({}).sort({ score: -1 }).limit(5);
     res.status(200).json({ users });
   } catch (err) {
     res.status(400).json({ error: err.message });

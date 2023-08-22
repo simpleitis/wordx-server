@@ -19,7 +19,7 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.statics.createUser = async function (username) {
+userSchema.statics.createUser = async function (username, score) {
   const exists = await this.findOne({
     username,
   });
@@ -28,7 +28,7 @@ userSchema.statics.createUser = async function (username) {
     throw Error("Username already exists!");
   }
 
-  const user = await this.create({ username, score: 0 });
+  const user = await this.create({ username, score: score ? score : 0 });
 
   return user;
 };
