@@ -2,21 +2,26 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
+const userSchema = new Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    score: {
+      type: Number,
+      required: true,
+    },
   },
-  score: {
-    type: Number,
-    required: true,
-  },
-});
+  {
+    timestamps: true, // This option enables the automatic createdAt and updatedAt fields
+  }
+);
 
 userSchema.statics.createUser = async function (username) {
   const exists = await this.findOne({
-    username: { $regex: new RegExp(username, "i") },
+    username,
   });
 
   if (exists) {
