@@ -86,18 +86,20 @@ const fetchUsers = async function (req, res) {
     const userIndex = allScores.indexOf(userEntry.score);
     const rank = userIndex + 1;
 
-    const finalResult = [
-      ...users.slice(0, 5),
-      { ...user, rank: rank },
-      {
-        percentile: {
-          day: dayPercentile,
-          year: yearPercentile,
-          allTime: allTimePercentile,
-        },
+    const finalResult = res.status(200).json({
+      users: [...users.slice(0, 5)],
+      user: {
+        _id: user[0].id,
+        username: user[0].username,
+        score: user[0].score,
+        rank: rank,
       },
-    ];
-    res.status(200).json({ finalResult });
+      percentile: {
+        day: dayPercentile,
+        year: yearPercentile,
+        allTime: allTimePercentile,
+      },
+    });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
