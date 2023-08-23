@@ -98,6 +98,7 @@ const fetchUsers = async function (req, res) {
         day: dayPercentile,
         year: yearPercentile,
         allTime: allTimePercentile,
+        score: user[0].score
       },
     });
   } catch (err) {
