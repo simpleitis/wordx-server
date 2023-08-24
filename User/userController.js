@@ -50,7 +50,7 @@ const createUser = async function (req, res) {
     try {
       const user = await User.createUser(username, score);
 
-      res.status(200).json({ username, score });
+      res.status(200).json({ user });
     } catch (err) {
       res.status(400).json({ error: err.message });
     }
@@ -125,4 +125,22 @@ const fetchUsers = async function (req, res) {
   }
 };
 
-module.exports = { createUser, fetchUsers };
+const changeUsername = async function (req, res) {
+  const { username, newUsername } = req.body;
+
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { username },
+      { username: newUsername },
+      {
+        new: true,
+      }
+    );
+
+    res.status(200).json({ updatedUser });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { createUser, fetchUsers, changeUsername };
