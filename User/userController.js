@@ -143,4 +143,15 @@ const changeUsername = async function (req, res) {
   }
 };
 
-module.exports = { createUser, fetchUsers, changeUsername };
+const getUser = async function (req, res) {
+  console.log("Inside get user");
+  const user = req.params.user;
+  const userEntry = await User.findOne({
+    username: user,
+  });
+  console.log(userEntry);
+
+  res.status(200).json({ userEntry });
+};
+
+module.exports = { createUser, fetchUsers, changeUsername, getUser };
